@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+ <style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    touch-action:none;
+    user-select:none;
+    -webkit-user-select:none;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at top,#2d5fff,#101625 60%),
+        linear-gradient(180deg,#111,#050505);
+    font-family:Arial,Helvetica,sans-serif;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding-top:90px;
+}
+.header{
+    position:fixed;
+    top:15px;
+    left:15px;
+    right:15px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:12px 20px;
+
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(15px);
+
+    border-radius:20px;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.35),
+        inset 0 1px 3px rgba(255,255,255,.12);
+
+    z-index:1000;
+}
+
+.logo{
+    color:white;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    color:white;
+}
+
+.dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#00ff66;
+
+    box-shadow:0 0 10px #00ff66;
+}
+
+.about{
+
+    color:white;
+    text-decoration:none;
+
+    background:#2d5fff;
+
+    padding:10px 18px;
+
+    border-radius:12px;
+
+    transition:.2s;
+
+}
+
+.about:hover{
+
+    background:#4f72ff;
+
+}
+
+/* CONTROLE */
+
+
+.dpad{
+    margin-top:90px;
+    display:grid;
+
+    grid-template-columns:repeat(3,min(22vw,95px));
+    grid-template-rows:repeat(3,min(22vw,95px));
+
+    gap:min(2vw,14px);
+
+    padding:25px;
+
+    border-radius:30px;
+
+    background:rgba(255,255,255,.06);
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:
+        0 30px 50px rgba(0,0,0,.45),
+        0 -8px 15px rgba(255,255,255,.05),
+        10px 0 18px rgba(0,0,0,.18),
+        -10px 0 18px rgba(0,0,0,.18),
+        inset 0 2px 8px rgba(255,255,255,.12),
+        inset 0 -8px 15px rgba(0,0,0,.25);
+
+}
+
+/* BOTÕES */
+
+.direction-btn{
+
+    width:min(22vw,95px);
+    height:min(22vw,95px);
+
+    border:none;
+
+    border-radius:24px;
+
+    cursor:pointer;
+
+    color:white;
+
+    font-size:min(8vw,34px);
+
+    background:
+        linear-gradient(145deg,#4f72ff,#2347db);
+
+    transition:
+        transform .18s,
+        filter .18s,
+        box-shadow .18s;
+
+    box-shadow:
+
+        0 16px 24px rgba(0,0,0,.40),
+
+        0 -5px 8px rgba(255,255,255,.08),
+
+        10px 0 18px rgba(0,0,0,.15),
+
+        -10px 0 18px rgba(0,0,0,.15),
+
+        inset 0 2px 5px rgba(255,255,255,.22),
+
+        inset 0 -5px 8px rgba(0,0,0,.28);
+
+}
+
+.direction-btn:hover{
+
+    transform:
+        translateY(-4px)
+        scale(1.05);
+
+    filter:brightness(1.08);
+
+    box-shadow:
+
+        0 24px 40px rgba(0,0,0,.50),
+
+        0 -6px 10px rgba(255,255,255,.12),
+
+        14px 0 20px rgba(0,0,0,.18),
+
+        -14px 0 20px rgba(0,0,0,.18),
+
+        inset 0 3px 6px rgba(255,255,255,.24),
+
+        inset 0 -6px 10px rgba(0,0,0,.35);
+
+}
+
+.direction-btn:active{
+
+    transform:scale(.92);
+
+    box-shadow:
+
+        inset 0 6px 14px rgba(0,0,0,.55),
+
+        inset 0 -2px 4px rgba(255,255,255,.08);
+
+}
+
+/* STOP */
+
+.stop{
+
+    background:
+        linear-gradient(145deg,#ff5d5d,#cb1f1f);
+
+}
+
+.stop:hover{
+
+    background:
+        linear-gradient(145deg,#ff7b7b,#e12a2a);
+
+}
+
+/* RESPONSIVO */
+
+@media(max-width:500px){
+
+.header{
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+.dpad{
+
+    margin-top:120px;
+
+    gap:10px;
+
+    padding:18px;
+
+}
+
+.direction-btn{
+
+    border-radius:18px;
+
+}
+
+}
+</style>
+</head>
+<body>
+<header class="header">
+
+    <div class="logo">
+        🤖 <span>CTISMART</span>
+    </div>
+
+    <div class="status">
+        <span class="dot"></span>
+        Conectado
+    </div>
+
+    <a
+        class="about"
+        href="https://www.ufsm.br/unidades-universitarias/ctism"
+        target="_blank">
+        Saiba mais
+    </a>
+
+</header>
+<div class="dpad">
+
+    <button class="direction-btn"
+        ontouchstart="p('F');p('L')"
+        ontouchend="r('F');r('L')"
+        onmousedown="p('F');p('L')"
+        onmouseup="r('F');r('L')"
+        onmouseleave="r('F');r('L')">
+        ↖
+    </button>
+
+    <!-- Frente -->
+    <button class="direction-btn"
+        ontouchstart="p('F')"
+        ontouchend="r('F')"
+        onmousedown="p('F')"
+        onmouseup="r('F')"
+        onmouseleave="r('F')">
+        ▲
+    </button>
+
+    <!-- Superior Direita -->
+    <button class="direction-btn"
+        ontouchstart="p('F');p('R')"
+        ontouchend="r('F');r('R')"
+        onmousedown="p('F');p('R')"
+        onmouseup="r('F');r('R')"
+        onmouseleave="r('F');r('R')">
+        ↗
+    </button>
+
+    <!-- Esquerda -->
+    <button class="direction-btn"
+        ontouchstart="p('L')"
+        ontouchend="r('L')"
+        onmousedown="p('L')"
+        onmouseup="r('L')"
+        onmouseleave="r('L')">
+        ◀
+    </button>
+
+    <!-- STOP -->
+    <button class="direction-btn stop"
+        ontouchstart="p('S')"
+        ontouchend="r('S')"
+        onmousedown="p('S')"
+        onmouseup="r('S')"
+        onmouseleave="r('S')">
+        ■
+    </button>
+
+    <!-- Direita -->
+    <button class="direction-btn"
+        ontouchstart="p('R')"
+        ontouchend="r('R')"
+        onmousedown="p('R')"
+        onmouseup="r('R')"
+        onmouseleave="r('R')">
+        ▶
+    </button>
+
+    <!-- Inferior Esquerda -->
+    <button class="direction-btn"
+        ontouchstart="p('B');p('L')"
+        ontouchend="r('B');r('L')"
+        onmousedown="p('B');p('L')"
+        onmouseup="r('B');r('L')"
+        onmouseleave="r('B');r('L')">
+        ↙
+    </button>
+
+    <!-- Ré -->
+    <button class="direction-btn"
+        ontouchstart="p('B')"
+        ontouchend="r('B')"
+        onmousedown="p('B')"
+        onmouseup="r('B')"
+        onmouseleave="r('B')">
+        ▼
+    </button>
+
+    <!-- Inferior Direita -->
+    <button class="direction-btn"
+        ontouchstart="p('B');p('R')"
+        ontouchend="r('B');r('R')"
+        onmousedown="p('B');p('R')"
+        onmouseup="r('B');r('R')"
+        onmouseleave="r('B');r('R')">
+        ↘
+    </button>
+
+</div>
+
+<script>
+    let s = {};
+    let lastCmd = '';
+    let interval = setInterval(send, 100); // FIX: envia comando periodicamente para evitar robô travado
+
+    function p(d) { s[d] = true; send(); }
+    function r(d) { delete s[d]; send(); }
+
+     function send() {
+
+    let cmd = 'STOP';
+
+    if(s.S){
+
+        cmd = 'STOP';
+
+    }
+    else if(s.F && s.L){
+
+        cmd = 'FORWARD_LEFT';
+
+    }
+    else if(s.F && s.R){
+
+        cmd = 'FORWARD_RIGHT';
+
+    }
+    else if(s.B && s.L){
+
+        cmd = 'BACKWARD_LEFT';
+
+    }
+    else if(s.B && s.R){
+
+        cmd = 'BACKWARD_RIGHT';
+
+    }
+    else if(s.F){
+
+        cmd = 'FORWARD';
+
+    }
+    else if(s.B){
+
+        cmd = 'BACKWARD';
+
+    }
+    else if(s.L){
+
+        cmd = 'LEFT';
+
+    }
+    else if(s.R){
+
+        cmd = 'RIGHT';
+
+    }
+
+    fetch('/move?dir=' + cmd).catch(()=>{});
+
+}
+  </script>
+</body>
+</html>
